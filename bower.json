@@ -1,0 +1,24 @@
+{
+  "name": "asynz",
+  "description": "Hipster way of load async script in the browser",
+  "main": "dist/asynz.js",
+  "authors": [
+    "zzarcon"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "async",
+    "script",
+    "load",
+    "append"
+  ],
+  "homepage": "https://github.com/zzarcon/asynz",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
