@@ -1,3 +1,4 @@
+const attrWhitelist = ['async', 'defer']
 let cache = {};
 
 function onload(src, resolve) {
@@ -6,8 +7,20 @@ function onload(src, resolve) {
   return resolve;
 }
 
+function setAttrs(script, attrs) {
+  Object.keys(attrs).forEach(key => {
+    let value = attrs[key];
+
+    if (attrWhitelist.includes(key)) {
+      script[key] = value;
+    } else {
+      script.setAttribute(key, value);
+    }
+  });
+}
+
 export default (src, attrs = {}) => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const isAlreadyLoaded = cache[src];
     if (isAlreadyLoaded) return resolve();
 
@@ -15,13 +28,11 @@ export default (src, attrs = {}) => {
 
     script.type = 'text/javascript';
     script.src = src;
-
-    Object.keys(attrs).forEach(key => {
-      script.setAttribute(key, attrs[key]);
-    });
-
     script.onload = onload(src, resolve);
+    script.onerror = reject;
 
+    setAttrs(script, attrs);
+    
     document.body.appendChild(script);
   });
 };

@@ -43,7 +43,35 @@ test('Cache: dont load the script if was already loaded', assert => {
 });
 
 test('Add the proper attributes to the script', assert => {
+  const zeptoSrc = 'http://zeptojs.com/zepto.js';
+  const id = 'zepto';
+  const attrs = {
+    id,
+    async: true,
+    defer: true,
+    foo: 'bar',
+    'data-api-key': 123
+  };
 
+  asynz(zeptoSrc, attrs).then(() => {    
+    let script = document.getElementById(id);
+
+    assert.pass(script.getAttribute('id') === id);
+    assert.pass(script.getAttribute('foo') === 'bar');
+    assert.pass(script.getAttribute('data-api-key') === 123);
+    assert.pass(script.async === true);
+    assert.pass(script.defer === true);
+    assert.end();
+  });
+});
+
+test('The promise should reject if the script doesnt load', assert => {
+  const erroredSrc = 'foourl';
+
+  asynz(erroredSrc).catch(() => {    
+    assert.pass(true);
+    assert.end();
+  });
 });
 
 function scriptsNumber() {
