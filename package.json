@@ -7,8 +7,9 @@
     "test": "babel-node test.js | faucet",
     "watch": "babel asynz.js --presets es2015 --out-file dist/asynz.js",
     "browser": "browserify test.js -o test_bundle.js -t [ babelify --presets [ es2015 ] ]",
+    "watchify": "watchify test.js -o test_bundle.js -t babelify -v",
     "test:server": "python -m SimpleHTTPServer",
-    "test:dev": "npm run test:server & watchify test.js -o test_bundle.js -t babelify -v"
+    "test:dev": "npm run test:server & npm run watchify"
   },
   "repository": {
     "type": "git",
