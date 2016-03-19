@@ -1,9 +1,11 @@
 {
   "name": "asynz",
   "version": "0.1.2",
-  "description": "Hipster way of load async script in the browser",
-  "main": "dist/asynz.js",
+  "description": "Hipster way of load async scripts in the browser",
+  "main": "asynz.js",
   "scripts": {
+    "dist": "babel asynz.js --presets es2015 --out-file dist/asynz.js",
+    "_dist": "browserify asynz.js -o dist/asynz.js -t babelify -v",
     "watch": "babel asynz.js --presets es2015 --watch --out-file dist/asynz.js",
     "browser": "browserify test.js -o test_bundle.js",
     "watchify_demo": "watchify demo.js -o test_bundle.js -t babelify -v",

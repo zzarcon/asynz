@@ -1,6 +1,7 @@
 {
   "name": "asynz",
-  "description": "Hipster way of load async script in the browser",
+  "version": "0.1.2",
+  "description": "Hipster way of load async scripts in the browser",
   "main": "dist/asynz.js",
   "authors": [
     "zzarcon"

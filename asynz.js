@@ -19,7 +19,7 @@ function setAttrs(script, attrs) {
   });
 }
 
-export default (src, attrs = {}) => {
+module.exports = (src, attrs = {}) => {
   return new Promise((resolve, reject) => {
     const isAlreadyLoaded = cache[src];
     if (isAlreadyLoaded) return resolve();
