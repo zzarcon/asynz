@@ -1,3 +1,6 @@
+require("babel-core/register");
+require("babel-polyfill");
+
 import asynz from './asynz';
 import tapeTest from 'tape';
 
@@ -11,38 +14,36 @@ function before() {
   scripts.forEach(s => s.remove());
 };
 
-test('Loading jquery', assert => {
+test('Loading jquery', async assert => {
   assert.pass(!window.jQuery);
 
-  asynz(src).then(() => {
-    assert.pass(!!window.jQuery);
-    assert.end();
-  });
+  await asynz(src);
+
+  assert.pass(!!window.jQuery);
+  assert.end();
 });
 
-test('Cache: loads the script for the first time', assert => {
+test('Cache: loads the script for the first time', async assert => {
   assert.pass(scriptsNumber().length === 0);
 
-  asynz(src).then(() => {    
-    assert.pass(scriptsNumber().length === 1);    
-    assert.end();
-  });
+  await asynz(src);
+
+  assert.pass(scriptsNumber().length === 1);    
+  assert.end();
 });
 
-test('Cache: dont load the script if was already loaded', assert => {
+test('Cache: dont load the script if was already loaded', async assert => {
   assert.pass(scriptsNumber().length === 0);
 
-  asynz(src).then(() => {    
-    assert.pass(scriptsNumber().length === 1);    
+  await asynz(src);
+  assert.pass(scriptsNumber().length === 1);    
 
-    asynz(src).then(() => {
-      assert.pass(scriptsNumber().length === 1);    
-      assert.end();
-    });
-  });
+  await asynz(src);
+  assert.pass(scriptsNumber().length === 1);    
+  assert.end();
 });
 
-test('Add the proper attributes to the script', assert => {
+test('Add the proper attributes to the script', async assert => {
   const zeptoSrc = 'http://zeptojs.com/zepto.js';
   const id = 'zepto';
   const attrs = {
@@ -53,25 +54,27 @@ test('Add the proper attributes to the script', assert => {
     'data-api-key': 123
   };
 
-  asynz(zeptoSrc, attrs).then(() => {    
-    let script = document.getElementById(id);
+  await asynz(zeptoSrc, attrs);
 
-    assert.pass(script.getAttribute('id') === id);
-    assert.pass(script.getAttribute('foo') === 'bar');
-    assert.pass(script.getAttribute('data-api-key') === 123);
-    assert.pass(script.async === true);
-    assert.pass(script.defer === true);
-    assert.end();
-  });
+  let script = document.getElementById(id);
+
+  assert.pass(script.getAttribute('id') === id);
+  assert.pass(script.getAttribute('foo') === 'bar');
+  assert.pass(script.getAttribute('data-api-key') === 123);
+  assert.pass(script.async === true);
+  assert.pass(script.defer === true);
+  assert.end();
 });
 
-test('The promise should reject if the script doesnt load', assert => {
-  const erroredSrc = 'foourl';
+test('The promise should reject if the script doesnt load', async assert => {
+  const erroredSrc = 'http://foourl';
 
-  asynz(erroredSrc).catch(() => {    
+  try {
+    await asynz(erroredSrc);
+  } catch(e) {
     assert.pass(true);
     assert.end();
-  });
+  }
 });
 
 function scriptsNumber() {
