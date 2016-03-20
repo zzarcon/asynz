@@ -3,6 +3,11 @@
 
 Just a **tiny** module to load scripts in the browser. It also has support for script attributes and cache.
 
+### Install
+`$ npm i asynz`
+
+`$ bower i asynz`
+
 ### Example: loading a dynamic library
 
 ```javascript
@@ -63,3 +68,27 @@ asynz(src).then(script => {
   console.log(jQuery);
 }).catch(console.log.bind(console));
 ```
+
+### Miscellaneous
+
+In order to use [async functions](https://ponyfoo.com/articles/understanding-javascript-async-await) today you will need to install/include some stuff in your build process
+
+**Needed packages**
+```
+$ npm i babel-cli babel-polyfill babel-plugin-transform-async-to-generator babel-preset-es2015 babel-preset-stage-0 --save-dev
+```
+
+**.babelrc**
+```json
+{
+  "presets": ["es2015", "stage-0"],
+  "plugins": ["transform-async-to-generator"]
+}
+```
+
+**Include in your source**
+```javascript
+require("babel-core/register");
+require("babel-polyfill");
+```
+
