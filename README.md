@@ -12,9 +12,8 @@ Just a **tiny** module to load scripts in the browser. It also has support for s
 
 ```javascript
 import asynz from "asynz";
-const src = 'https://code.jquery.com/jquery-2.2.1.js';
 
-loadLibrary(src);
+loadLibrary('https://code.jquery.com/jquery-2.2.1.js');
 
 async loadLibrary(src) {
   console.log(typeof window.jQuery === "undefined");
