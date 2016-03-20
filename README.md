@@ -16,7 +16,7 @@ const src = 'https://code.jquery.com/jquery-2.2.1.js';
 
 loadLibrary(src);
 
-async loadLibrary() {
+async loadLibrary(src) {
   console.log(typeof window.jQuery === "undefined");
   let script = await asynz(src);
   
