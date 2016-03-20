@@ -1,3 +1,5 @@
+'use strict';
+
 const attrWhitelist = ['async', 'defer']
 let cache = {};
 
