@@ -1,6 +1,6 @@
 {
   "name": "asynz",
-  "version": "0.1.3",
+  "version": "0.2.1",
   "description": "Hipster way of load async scripts in the browser",
   "main": "asynz.js",
   "scripts": {
